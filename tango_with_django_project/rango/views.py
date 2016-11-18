@@ -8,7 +8,9 @@ from django.http import HttpResponse
 #	return HttpResponse("Rango says hey there partner, like, pet! <br/> <a href='/rango/about/'>About</a>")
 	
 def about(request):
-	return HttpResponse("Rango says here is the About page <br/> <a href='/rango/'>Index</a> ")
+	context_dict = {'boldaboutmessage': "this is the boldaboutmessage context message"}
+	return render(request, 'rango/about.html', context=context_dict)
+	#return HttpResponse("Rango says here is the About page <br/> <a href='/rango/'>Index</a> ")
 
 def index(request):
 	# Construct a dictionary to pass to the template engine as its context.
