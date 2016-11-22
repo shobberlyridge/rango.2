@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rango.models import Category
+from rango.models import Page
 
 # Create your views here.
 
@@ -32,3 +33,15 @@ def index(request):
 	context_dict = {'categories': category_list}
 	# Render the response and send it back!
 	return render(request, 'rango/index.html', context_dict)
+
+def show_category(request, category_name_slug):
+	context_dict = {}
+	try:
+		category = Category.objects.get(slug=category_name_slug)
+		pages = Page.objects.filter(category=category)
+		context_dict['pages'] = pages
+		context_dict['category'] = category
+	except Category.DoesNotExist:
+		context_dict['category'] = None
+		context_dict['pages'] = None
+	return render(request, 'rango/category.html', context_dict)
